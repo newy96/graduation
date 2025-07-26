@@ -1,5 +1,3 @@
-# main.py
-
 import networkx as nx
 import random
 from collections import Counter

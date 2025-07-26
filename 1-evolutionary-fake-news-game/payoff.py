@@ -10,6 +10,6 @@ def get_payoff(strategy: str) -> float:
     return PAYOFF_MATRIX.get(strategy, 0.0)
 
 if __name__ == "__main__":
-    # Тестов код – ще се изпълни само ако стартираш директно файла payoff.py
+    # Тестов код – ще се изпълни само ако се стартира директно файла payoff.py
     for s in ["Share", "Ignore", "Report", "Unknown"]:
         print(f"Payoff for {s}: {get_payoff(s)}")
