@@ -15,9 +15,9 @@ for node in G.nodes():
 
 # Стойности на ангажираност (payoff)
 payoff_matrix = {
-    'Share': 3,
-    'Ignore': 0,
-    'Report': 2
+    'Share': 1.0,
+    'Ignore': 0.1,
+    'Report': 0.7
 }
 
 # Показване на първите 10 възела със стратегия

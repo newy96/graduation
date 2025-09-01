@@ -1,0 +1,9 @@
+metric,value
+final_coverage,1.0
+auc,0.8423333333333333
+peak_growth,0.13
+peak_growth_iter,6
+plateau_iter,16
+time_to_50,6
+time_to_80,9
+time_to_95,11

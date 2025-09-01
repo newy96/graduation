@@ -1,6 +1,7 @@
 import networkx as nx
 import random
 
+# Генериране на графа
 def generate_social_graph(n=50, min_neighbors=3, max_neighbors=6):
     G = nx.Graph()
     G.add_nodes_from(range(n))

@@ -1,7 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import random
-
+# Този код е само тестов
 # 1. Създаваме празен неориентиран граф
 G = nx.Graph()
 

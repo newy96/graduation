@@ -1,32 +1,33 @@
+# replicator_dynamics.py
 import random
-from payoff import get_payoff
+import math
+from payoff import node_payoff
 
-def update_strategies(graph, strategies):
+def update_strategies(G, strategies, beta: float = 1.0):
+    """
+    Една синхронна стъпка на имитационна репликаторна динамика.
+    1) изчисляваме фитнес f_i за всички възли (сума срещу съседите);
+    2) всеки възел избира случаен съсед j;
+    3) приема неговата стратегия с вероятност 1/(1+exp(-(f_j - f_i)*beta)).
+    """
+    # 1) фитнеси за текущия профил на стратегиите
+    fitness = {i: node_payoff(G, strategies, i) for i in G.nodes()}
+
     new_strategies = strategies.copy()
 
-    # 1. Преглежда всеки възел от графа.
-    for node in graph.nodes():
-        neighbors = list(graph.neighbors(node))
-        if not neighbors:
-            continue  # Ако няма съседи, пропускаме
+    for i in G.nodes():
+        neigh = list(G.neighbors(i))
+        if not neigh:
+            continue
 
-        current_strategy = strategies[node]
-        current_payoff = get_payoff(current_strategy)
+        j = random.choice(neigh)            # съсед за сравнение
+        fi = fitness[i]
+        fj = fitness[j]
 
-        # 2. Сравнява неговата стратегия с тези на съседите.
-        neighbor_payoffs = [(n, get_payoff(strategies[n])) for n in neighbors]
-        total = sum(payoff for _, payoff in neighbor_payoffs)
-        if total == 0:
-            continue  # Ако всички съседи имат 0 печалба, няма как да изберем
+        # 2) Fermi-вероятност за приемане на стратегията на j
+        p_adopt = 1.0 / (1.0 + math.exp(-(fj - fi) * beta))
 
-        # 3. Избира съсед с вероятност, пропорционална на текущата му печалба.
-        probabilities = [payoff / total for _, payoff in neighbor_payoffs]
-        chosen_neighbor = random.choices(
-            [n for n, _ in neighbor_payoffs],
-            weights=probabilities
-        )[0]
-
-        # 4. Приема стратегията на избрания съсед.
-        new_strategies[node] = strategies[chosen_neighbor]
+        if random.random() < p_adopt:
+            new_strategies[i] = strategies[j]
 
     return new_strategies

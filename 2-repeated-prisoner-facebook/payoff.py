@@ -1,3 +1,4 @@
+# Платежна матрица
 PAYOFF_MATRIX = {
     ('Like', 'Like'): (2, 2),
     ('Like', 'Ignore'): (0, 1),
